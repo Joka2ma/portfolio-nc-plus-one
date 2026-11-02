@@ -2,7 +2,8 @@
 
 from typing import Any
 
-from fastapi.testclient import TestClient
+
+from starlette.testclient import TestClient
 
 
 def test_returns_200(client: TestClient) -> None:

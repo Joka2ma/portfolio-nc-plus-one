@@ -2,12 +2,14 @@
 
 import bcrypt
 from datetime import datetime 
+import re
 
+_INTEGER = re.compile(r"-?[0-9]+")
 
 def normalise_email(email:str)-> str:
     """_summary_
     
-
+        This trims the email of all whitespaces and convert to lowercase to make comparision easier
     Args:
         email (str): _description_
 
@@ -19,7 +21,8 @@ def normalise_email(email:str)-> str:
 
 def hash_password(password:str) -> str:
     """_summary_
-
+    This is to ensure that passwords are never stored as raw strings in the
+    database for security purposes. They are hashed and random characters(salt) are wrapped the password making them a bit more secure.
     Args:
         password (str): _description_
 
@@ -43,3 +46,18 @@ def validate_event_times (starts_at:str,ends_at:str) -> None:
         raise ValueError(
             f"ends at ({ends_at}) must not before start_at ({starts_at})"
         )
+        
+def parse_id(raw:str) -> int:
+    """_summary_
+    Converts id from the url into an it. If this can't be done, an error is raised
+    Args:
+        raw (str): _description_
+
+    Returns:
+        int: _description_
+    """
+    
+    if not _INTEGER.fullmatch(raw):
+        raise ValueError(f"not a valid integer: {raw!r}")
+    return int(raw)
+

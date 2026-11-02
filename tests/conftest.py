@@ -3,6 +3,7 @@
 import json
 import os
 from collections.abc import Iterator
+from pathlib import Path
 from typing import Any, cast
 
 # Must be set before config.connection is imported.
@@ -15,9 +16,11 @@ from app import app
 from config.connection import get_db_connection
 from src.seed import SeedData, seed
 
+DATA_DIR = Path(__file__).parent / "data"
+
 
 def _load(name: str) -> Any:
-    with open(f"db/data/{name}.json") as f:
+    with open(DATA_DIR / f"{name}.json") as f:
         return json.load(f)
 
 
