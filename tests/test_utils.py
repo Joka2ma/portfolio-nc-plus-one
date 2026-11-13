@@ -1,7 +1,7 @@
 import bcrypt
 import pytest
 
-from src.utils import hash_password, normalise_email, parse_id, validate_event_times
+from src.utils import hash_password, normalise_email, parse_id, validate_event_times,verify_password
 
 
 def test_lowercase_email() -> None:
@@ -55,3 +55,14 @@ def test_parse_id_accepts_integers(raw: str, expected: int) -> None:
 def test_parse_id_rejects_non_integers(raw: str) -> None:
     with pytest.raises(ValueError):
         parse_id(raw)
+        
+""" Verifying password and email for authentication """
+
+def test_verify_password_is_correct_passowrd() -> None:
+    assert verify_password("password123",hash_password("password123")) is True
+    
+    
+def test_verify_password_rejects_incorrect_password() -> None:
+    assert verify_password("password", hash_password("password123")) is False
+
+

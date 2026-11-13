@@ -16,6 +16,8 @@ from app import app
 from config.connection import get_db_connection
 from src.seed import SeedData, seed
 
+os.environ.setdefault("JWT_SECRET", "test-secret-for-pytest-only-" + "x" * 16)
+
 DATA_DIR = Path(__file__).parent / "data"
 
 

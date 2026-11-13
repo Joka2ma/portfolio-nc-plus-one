@@ -2,7 +2,7 @@
 
 from typing import Any, cast
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException,status
 from psycopg2.extras import RealDictCursor
 
 from config.connection import get_db_connection

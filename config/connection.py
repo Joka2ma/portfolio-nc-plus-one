@@ -2,8 +2,10 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
+from psycopg2.extensions import connection as PGConnection
+from collections import Generator
 
-load_dotenv(".env.development")
+load_dotenv("ENV_FILE",".env.development")
 
 
 def get_db_connection():
@@ -15,3 +17,10 @@ def get_db_connection():
         port=os.getenv("PGPORT", "5432"),
     )
 
+def get_db() -> Generator[PgConnection, None, None]:
+    """Provide a database connection per request and close it afterward."""
+    conn = get_db_connection()
+    try:
+        yield conn
+    finally:
+        conn.close()
